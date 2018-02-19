@@ -1,19 +1,4 @@
 <?xml version="1.0"?>
 <!--   Last edited by http://www.encodedna.com   -->
-<list>
-  <ref>
-    <image>angularjs.png</image>
-    <title>AngularJS for Beginners</title>
-    <alt>Beginners Guide</alt>
-  </ref>
-  <ref>
-    <image>xml.png</image>
-    <title>XML for Beginners</title>
-    <alt>Beginners Guide</alt>
-  </ref>
-  <ref>
-    <image>html5.png</image>
-    <title>HTML5 Xpressions</title>
-    <alt>HTML5 Tips</alt>
-  </ref>
-</list>
+<list link="abc"></list>
+<list link="abc"></list>
