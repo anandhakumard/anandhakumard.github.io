@@ -1,12 +1,6 @@
 <?xml version="1.0"?>
 <!--   Last edited by http://www.encodedna.com   -->
- <images>
-           <img row="1">
-              <path>d:\DZHosts\LocalUser\anandhakumard\www.raining.somee.com\RainMaps\Clouds\Vizag_Cloud\1.png</path>
-	      <timestamp>01/01/2010</timestamp>
-           </img>
-          <img row="2">
-             <path>d:\DZHosts\LocalUser\anandhakumard\www.raining.somee.com\RainMaps\Clouds\Vizag_Cloud\2.png</path>
-	      <timestamp>01/01/2010</timestamp>
-           </img>
-     </images>
+<cloud>
+  <img path="d:\DZHosts\LocalUser\anandhakumard\www.raining.somee.com\RainMaps\Clouds\Vizag_Cloud\1.png" timestamp="01/01/2010" />
+  <img path="d:\DZHosts\LocalUser\anandhakumard\www.raining.somee.com\RainMaps\Clouds\Vizag_Cloud\Vizag_2.png" timestamp="01/02/2017" />
+</cloud>
