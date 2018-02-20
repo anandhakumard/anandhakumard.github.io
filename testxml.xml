@@ -1,6 +1,12 @@
 <?xml version="1.0"?>
 <!--   Last edited by http://www.encodedna.com   -->
-<sys>
-<list link="abc"></list>
-<list link="xyz"></list>
-</sys>
+ <images>
+           <img row="1">
+              <path>John</path>
+	      <timestamp>01/01/2010</timestamp>
+           </img>
+          <img row="2">
+             <path>John</path>
+	      <timestamp>01/01/2010</timestamp>
+           </img>
+     </images>
