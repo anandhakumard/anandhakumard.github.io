@@ -1,0 +1,246 @@
+﻿
+<!DOCTYPE html>
+<html>
+ 
+<head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <link href="http://justpaani.com/css/bootstrap.min.css" rel="stylesheet">
+    <link href="http://justpaani.com/css/font-awesome.min.css" rel="stylesheet">
+    <link href="http://justpaani.com/css/animate.min.css" rel="stylesheet">
+    <link href="http://justpaani.com/css/owl.carousel.css" rel="stylesheet">
+    <link href="http://justpaani.com/css/owl.transitions.css" rel="stylesheet">
+    <link href="http://justpaani.com/css/prettyPhoto.css" rel="stylesheet">
+    <link href="http://justpaani.com/css/main.css" rel="stylesheet">
+    <link href="http://justpaani.com/css/responsive.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+ 
+    <title>Showing/Hiding overlays</title>
+    <style>
+        /* Always set the map height explicitly to define the size of the div
+           * element that contains the map. */
+          #map {
+            height: 100%;
+          }
+          /* Optional: Makes the sample page fill the window. */
+          html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+   
+          }
+          #floating-panel {
+            position: absolute;
+            top: 10px;
+            left: 25%;
+            z-index: 5;
+            background-color: #fff;
+            padding: 5px;
+            border: 1px solid #999;
+            text-align: center;
+            font-family: 'Roboto','sans-serif';
+            line-height: 30px;
+            padding-left: 10px;
+   
+          }
+    </style>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDQQ7E6ONrsJ8NTZqmYC5OIF_Zf8-wl4ds"></script>
+    <script>
+        // This example adds hide() and show() methods to a custom overlay's prototype.
+        // These methods toggle the visibility of the container <div>.
+        // Additionally, we add a toggleDOM() method, which attaches or detaches the
+        // overlay to or from the map.
+
+        var overlay;
+
+        USGSOverlay.prototype = new google.maps.OverlayView();
+
+        function initMap() {
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 8,
+                center: { lat: 13.068776734357693, lng: 80.2716064453125 }
+            });
+
+            var bounds = new google.maps.LatLngBounds(
+                       new google.maps.LatLng(11.716788389998475, 78.85986328125),
+                new google.maps.LatLng(14.397438794346604, 81.650390625));
+
+            // The photograph is courtesy of the U.S. Geological Survey.
+            var srcImage = 'https://www.google.org/assets/static/images/logo_googledotorg-171e7482e5523603fc0eed236dd772d8.svg';
+
+
+            overlay = new USGSOverlay(bounds, srcImage, map);
+        }
+
+        /** @constructor */
+        function USGSOverlay(bounds, image, map) {
+
+            // Now initialize all properties.
+            this.bounds_ = bounds;
+            this.image_ = image;
+            this.map_ = map;
+
+            // Define a property to hold the image's div. We'll
+            // actually create this div upon receipt of the onAdd()
+            // method so we'll leave it null for now.
+            this.div_ = null;
+
+            // Explicitly call setMap on this overlay
+            this.setMap(map);
+        }
+
+        /**
+         * onAdd is called when the map's panes are ready and the overlay has been
+         * added to the map.
+         */
+        USGSOverlay.prototype.onAdd = function () {
+
+            var div = document.createElement('div');
+            div.style.border = 'none';
+            div.style.borderWidth = '0px';
+            div.style.position = 'absolute';
+            div.style.opacity = '1';
+
+            // Create the img element and attach it to the div.
+            var img = document.createElement('img');
+            img.setAttribute("onclick", "valid()");
+            img.setAttribute("id", "Div1")
+            img.src = document.getElementById('img1').src;
+            img.style.width = '100%';
+            img.style.height = '100%';
+            div.appendChild(img);
+
+            this.div_ = div;
+
+            // Add the element to the "overlayImage" pane.
+            var panes = this.getPanes();
+            panes.overlayImage.appendChild(this.div_);
+
+
+
+        };
+
+        USGSOverlay.prototype.draw = function () {
+
+            // We use the south-west and north-east
+            // coordinates of the overlay to peg it to the correct position and size.
+            // To do this, we need to retrieve the projection from the overlay.
+            var overlayProjection = this.getProjection();
+
+            // Retrieve the south-west and north-east coordinates of this overlay
+            // in LatLngs and convert them to pixel coordinates.
+            // We'll use these coordinates to resize the div.
+            var sw = overlayProjection.fromLatLngToDivPixel(this.bounds_.getSouthWest());
+            var ne = overlayProjection.fromLatLngToDivPixel(this.bounds_.getNorthEast());
+
+            // Resize the image's div to fit the indicated dimensions.
+            var div = this.div_;
+            div.style.left = sw.x + 'px';
+            div.style.top = ne.y + 'px';
+            div.style.width = (ne.x - sw.x) + 'px';
+            div.style.height = (sw.y - ne.y) + 'px';
+
+        };
+
+        USGSOverlay.prototype.onRemove = function () {
+            this.div_.parentNode.removeChild(this.div_);
+        };
+
+        // Set the visibility to 'hidden' or 'visible'.
+        USGSOverlay.prototype.hide = function () {
+            if (this.div_) {
+                // The visibility property must be a string enclosed in quotes.
+                this.div_.style.visibility = 'hidden';
+            }
+        };
+
+        USGSOverlay.prototype.show = function () {
+            if (this.div_) {
+                this.div_.style.visibility = 'visible';
+            }
+        };
+
+        USGSOverlay.prototype.toggle = function () {
+            if (this.div_) {
+                if (this.div_.style.visibility === 'hidden') {
+                    this.show();
+                } else {
+                    this.hide();
+                }
+            }
+        };
+
+        function valid() {
+           
+            //document.getElementById('Div1').src = 'http://polamavenama.com/Clouds/Tamilnadu/Tamilnadu_11335.jpg';
+
+        }
+
+
+        google.maps.event.addDomListener(window, 'load', initMap);
+    </script>
+    <script language="javascript" type="text/javascript">
+        var images = new Array()
+        images[0] = "http://raining.somee.com/rainmaps/clouds/2abc.png";
+        images[1] = "http://raining.somee.com/rainmaps/clouds/3abc.png";
+        images[2] = "http://raining.somee.com/rainmaps/clouds/4abc.png";
+        images[3] = "http://raining.somee.com/rainmaps/clouds/5abc.png";
+        images[4] = "http://raining.somee.com/rainmaps/clouds/6abc.png";
+      
+        images[5] = "http://raining.somee.com/rainmaps/clouds/9abc.png";
+        images[6] = "Clouds/11abc.png";
+        images[7] = "Clouds/12abc.png";
+        images[8] = "Clouds/14abc.png";
+        images[9] = "Clouds/15abc.png";
+        images[10] = "http://raining.somee.com/rainmaps/clouds/11abc.png";
+
+
+        var myVar = setInterval("changeImage()", 1000);
+        var x = 0;
+
+        function changeImage() {
+
+
+            if (images.length == x) {
+                clearInterval(myVar);
+            }
+            else {
+                document.getElementById('Div1').src = images[x];
+                x++;
+            }
+
+
+
+
+        }
+
+        function submitFunction() {
+
+            window.clearInterval(myVar);
+            x = 0;
+            myVar = setInterval("changeImage()", 1000);
+        }
+
+
+
+    </script>
+ 
+ 
+ 
+ 
+</head>
+ 
+<body>
+    <!-- Add an input button to initiate the toggle method on the overlay. -->
+ 
+<div id="floating-panel">
+      <input type="button" value="Replay" onclick="submitFunction()"></input>
+    
+    </div>
+ 
+    <div id="map"></div>
+    <img class="Div1" alt="image" id="img1" />
+ 
+</body>
+ 
+</html>
