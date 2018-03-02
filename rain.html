@@ -304,6 +304,9 @@
 
     xhttp.open("GET", "http://raining.somee.com/RainMaps/XML/chennai.xml", true);
 
+     xhttp.header("Access-Control-Allow-Origin", "*");
+    xhttp.header("Access-Control-Allow-Headers", "X-Requested-With"); 
+    
     xhttp.send();
 
     var xmls;
