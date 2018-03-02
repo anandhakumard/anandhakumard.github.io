@@ -95,7 +95,7 @@
 
         var map = new google.maps.Map(document.getElementById('map'), {
 
-            zoom: 8,
+            zoom: 8.5,
 
             center: {
 
@@ -302,7 +302,7 @@
     };
 
 
-    xhttp.open("GET", "http://raining.somee.com/rainmaps/xml/Chennai.xml", true);
+    xhttp.open("GET", "http://raining.somee.com/RainMaps/XML/chennai.xml", true);
 
     xhttp.send();
 
@@ -352,7 +352,7 @@
 
     }
    
-    var myVar = setInterval("changeImage()", 1500);
+    var myVar = setInterval("changeImage()", 1000);
 
     var x = 0;
 
@@ -380,7 +380,7 @@
 
         x = 0;
 
-        myVar = setInterval("changeImage()", 1500);
+        myVar = setInterval("changeImage()", 1000);
 
     }
 </script>
